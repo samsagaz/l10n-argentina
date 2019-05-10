@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+
+    <!-- Module Category -->
+
+    <record model="ir.module.category" id="module_category_sale_features">
+        <field name="name">Sale Features</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <!-- User groups -->
+
+    <record model="res.groups" id="group_salesman_current_account">
+        <field name="name">Current Account</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_sale_salesman_all_leads'))]"/>
+        <field name="category_id" ref="module_category_sale_features"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+    <record model="res.groups" id="group_salesman_approve_prices">
+        <field name="name">Sale Orders (Prices)</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_sale_salesman_all_leads'))]"/>
+        <field name="category_id" ref="module_category_sale_features"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+</data>
+</openerp>
