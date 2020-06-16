@@ -8,7 +8,7 @@ class TestAccount:
     def test_account_move(self, ENV):
         partner = ENV.ref('base.res_partner_12')
         account_obj = ENV['account.account']
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         journal_obj = ENV['account.journal']
         pos_ar_obj = ENV['pos.ar']
         receivable_type = ENV.ref(

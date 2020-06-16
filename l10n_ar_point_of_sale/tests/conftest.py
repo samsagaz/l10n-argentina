@@ -11,7 +11,7 @@ def FY(env):
 
 @pytest.fixture
 def INV(env):
-    return env['account.invoice']
+    return env['account.move']
 
 @pytest.fixture
 def ENV(env):

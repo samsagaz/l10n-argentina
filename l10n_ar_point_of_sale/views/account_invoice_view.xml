@@ -3,28 +3,28 @@
     <data>
         <!--vista Heredada de account_invoice-->
         <record id="account_invoice_view_form" model="ir.ui.view">
-            <field name="name">account.invoice.form.pos</field>
-            <field name="model">account.invoice</field>
+            <field name="name">account.move.form.pos</field>
+            <field name="model">account.move</field>
             <field name="type">form</field>
-            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
                 <data>
-                    <field name="number" position="attributes">
+                    <!-- <field name="number" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </field> -->
+                    <field name="invoice_sequence_number_next" position="attributes">
                         <attribute name="invisible">1</attribute>
                     </field>
-                    <field name="sequence_number_next" position="attributes">
-                        <attribute name="invisible">1</attribute>
-                    </field>
-                    <field name="sequence_number_next_prefix" position="attributes">
+                    <field name="invoice_sequence_number_next_prefix" position="attributes">
                         <attribute name="invisible">1</attribute>
                     </field>
                     <field name="partner_id" position="attributes">
                         <attribute name="default_focus">1</attribute>
                     </field>
-                    <xpath expr="//sheet/h1[hasclass('mt0')]/div[2]" position="attributes">
+                    <xpath expr="//sheet/div/h1[hasclass('mt0')]" position="attributes">
                         <attribute name="attrs">{}</attribute>
                     </xpath>
-                    <field name="sequence_number_next_prefix" position="before">
+                    <field name="invoice_sequence_number_next_prefix" position="before">
                         <field name="denomination_id" class="oe_inline" required="1"
                             attrs="{'readonly': True}" force_save="True"/>
                         <field name="internal_number" class="oe_inline"
@@ -50,21 +50,21 @@
                         <field name="amount_untaxed" class="oe_subtotal_footer_separator" string="Subtotal"/>
                     </field>
                     <!-- It is necessary because the invisible attribute set invisible the tax_line_ids of Taxes page-->
-                    <xpath expr="//notebook/page[@name='other_info']/field[@name='tax_line_ids']" position="replace"/>
+                    <!-- <xpath expr="//notebook/page[@name='other_info']/field[@name='tax_line_ids']" position="replace"/> -->
                     <xpath expr="//notebook/page[@name='other_info']" position="before">
                         <page string="Taxes" name="taxes">
                             <separator string="Applied Taxes"/>
-                            <field name="tax_line_ids">
+                            <!-- <field name="tax_line_ids">
                                 <tree editable="bottom" string="Taxes" name="tax_line_ids">
                                     <field name="name"/>
                                     <field name="tax_id"
                                         domain="[
                                             ('tax_group','in',['other','vat']),
                                             ('type_tax_use','in',['sale','all'])
-                                        ]" />
+                                        ]" /> -->
                                     <!--Need invisible fields for on_change to create all necessary info -->
                                     <!-- <field name="tax_id" invisible="1"/> -->
-                                    <field name="sequence" invisible="1"/>
+                                    <!-- <field name="sequence" invisible="1"/>
                                     <field name="manual" invisible="1"/>
                                     <field name="account_id" groups="account.group_account_user"/>
                                     <field name="account_analytic_id"
@@ -76,13 +76,13 @@
                                     <field name="amount_total" invisible="1"/>
                                     <field name="currency_id" invisible="1" force_save="1"/>
                                 </tree>
-                            </field>
+                            </field> -->
                         </page>
                     </xpath>
-                    <field name="outstanding_credits_debits_widget" position="replace"/>
-                    <xpath expr="//group[hasclass('oe_subtotal_footer', 'oe_right')]" position="after">
+                    <field name="invoice_outstanding_credits_debits_widget" position="replace"/>
+                    <xpath expr="//group[hasclass('oe_subtotal_footer')]" position="after">
                         <div style="clear:both;float:right">
-                            <field name="outstanding_credits_debits_widget" colspan="2"
+                            <field name="invoice_outstanding_credits_debits_widget" colspan="2"
                                 nolabel="1" widget="payment"
                                 attrs="{'invisible': [('state', 'not in', 'open')]}"/>
                         </div>
@@ -93,13 +93,13 @@
 
         <!--vista Heredada de Search de account_invoice-->
         <record id="account_invoice_view_search" model="ir.ui.view">
-            <field name="name">account.invoice.pos.filter</field>
-            <field name="model">account.invoice</field>
+            <field name="name">account.move.pos.filter</field>
+            <field name="model">account.move</field>
             <field name="type">search</field>
             <field name="inherit_id" ref="account.view_account_invoice_filter"/>
             <field name="arch" type="xml">
                 <data>
-                    <field name="number" position="replace">
+                    <field name="name" position="replace">
                         <field name="internal_number" filter_domain="['|', '|', ('internal_number','ilike',self), ('origin','ilike',self), ('partner_id', 'child_of', self)]"/>
                         <field name="denomination_id" string="Denomination"/>
                         <field name="pos_ar_id" string="POS"/>
@@ -109,45 +109,44 @@
         </record>
 
         <!--vista Heredada de account_invoice-->
-        <record id="account_invoice_view_tree" model="ir.ui.view">
-            <field name="name">account.invoice.tree.inherit2</field>
-            <field name="model">account.invoice</field>
+        <!-- <record id="account_invoice_view_tree" model="ir.ui.view">
+            <field name="name">account.move.tree.inherit2</field>
+            <field name="model">account.move</field>
             <field name="type">tree</field>
-            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="inherit_id" ref="account.view_move_tree"/>
             <field name="arch" type="xml">
-                <field name="number" position="after">
+                <field name="name" position="after">
                     <field name="denomination_id" string="Den"/>
                     <field name="internal_number" width="100"/>
                 </field>
-                <field name="number" position="attributes">
+                <field name="name" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
             </field>
-        </record>
+        </record> -->
 
         <record id="account_invoice_view_form_supplier" model="ir.ui.view">
-            <field name="name">account.invoice.form.supplier.pos</field>
-            <field name="model">account.invoice</field>
+            <field name="name">account.move.form.supplier.pos</field>
+            <field name="model">account.move</field>
             <field name="type">form</field>
-            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
-
-                <field name="number" position="attributes">
+                <field name="name" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
-                <field name="sequence_number_next" position="attributes">
+                <field name="invoice_sequence_number_next" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
-                <field name="sequence_number_next_prefix" position="attributes">
+                <field name="invoice_sequence_number_next_prefix" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
                 <field name="partner_id" position="attributes">
                     <attribute name="default_focus">1</attribute>
                 </field>
-                <xpath expr="//sheet/div/h1[hasclass('mt0')]/div" position="attributes">
+                <xpath expr="//sheet/div/h1[hasclass('mt0')]" position="attributes">
                     <attribute name="attrs">{}</attribute>
                 </xpath>
-                <field name="sequence_number_next_prefix" position="before">
+                <field name="invoice_sequence_number_next_prefix" position="before">
                     <field name="denomination_id" class="oe_inline" required="1"
                         attrs="{'readonly': True}" force_save="True"/>
                     <field name="internal_number" class="oe_inline"
@@ -155,22 +154,22 @@
                         attrs="{'readonly':[('state', '!=', 'draft')]}"/>
                 </field>
                 <!-- It is necessary because the invisible attribute set invisible the tax_line_ids of Taxes page-->
-                <xpath expr="//notebook//field[@name='tax_line_ids']" position="replace"/>
+                <!-- <xpath expr="//notebook//field[@name='tax_line_ids']" position="replace"/> -->
 
                 <xpath expr="//notebook/page[@name='other_info']" position="before">
                     <page string="Taxes" name="taxes">
                         <separator string="Supported Taxes"/>
-                        <field name="tax_line_ids">
+                        <!-- <field name="tax_line_ids">
                             <tree editable="bottom" string="Taxes" name="tax_line_ids">
                                 <field name="name"/>
                                 <field name="tax_id"
                                     domain="[
                                         ('tax_group','in',['other','vat']),
                                         ('type_tax_use','in',['purchase','all'])
-                                    ]" />
+                                    ]" /> -->
                                 <!--Need invisible fields for on_change to create all necessary info -->
                                 <!-- <field name="tax_id" invisible="1"/> -->
-                                <field name="sequence" invisible="1"/>
+                                <!-- <field name="sequence" invisible="1"/>
                                 <field name="manual" invisible="1"/>
                                 <field name="account_id" groups="account.group_account_user"/>
                                 <field name="account_analytic_id"
@@ -182,7 +181,7 @@
                                 <field name="amount_total" invisible="1"/>
                                 <field name="currency_id" invisible="1" force_save="1"/>
                             </tree>
-                        </field>
+                        </field> -->
                     </page>
                 </xpath>
                 <field name="partner_id" position="after">
@@ -204,43 +203,42 @@
                     <field name="amount_untaxed" class="oe_subtotal_footer_separator"
                         widget="monetary" options="{'currency_field': 'currency_id'}"/>
                 </field>
-                <field name="outstanding_credits_debits_widget" position="replace"/>
-                <xpath expr="//group[hasclass('oe_subtotal_footer', 'oe_right')]" position="after">
+                <field name="invoice_outstanding_credits_debits_widget" position="replace"/>
+                <xpath expr="//group[hasclass('oe_subtotal_footer')]" position="after">
                     <div style="clear:both;float:right">
-                        <field name="outstanding_credits_debits_widget" colspan="2"
+                        <field name="invoice_outstanding_credits_debits_widget" colspan="2"
                             nolabel="1" widget="payment" attrs="{'invisible': [('state', 'not in', 'open')]}"/>
                     </div>
                 </xpath>
             </field>
         </record>
 
-        <record id="account_invoice_view_tree_supplier" model="ir.ui.view">
-            <field name="name">account.invoice.tree.supplier.pos</field>
-            <field name="model">account.invoice</field>
+        <!-- <record id="account_invoice_view_tree_supplier" model="ir.ui.view">
+            <field name="name">account.move.tree.supplier.pos</field>
+            <field name="model">account.move</field>
             <field name="type">tree</field>
-            <field name="inherit_id" ref="account.invoice_supplier_tree"/>
+            <field name="inherit_id" ref="account.view_account_supplier_payment_tree"/>
             <field name="arch" type="xml">
-                <field name="number" position="after">
+                <field name="name" position="after">
                     <field name="denomination_id" string="Den"/>
                     <field name="internal_number" width="100" string="Number"/>
                 </field>
-                <field name="number" position="attributes">
+                <field name="name" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
             </field>
-        </record>
+        </record> -->
 
-        <record id="account.action_invoice_tree1" model="ir.actions.act_window">
+        <!-- <record id="account.action_invoice_tree1" model="ir.actions.act_window">
             <field name="domain">[
                 ('type','=','out_invoice'),
                 ('is_debit_note', '=', False)
             ]</field>
-        </record>
+        </record> -->
 
         <record id="account_invoice_action_debit_note" model="ir.actions.act_window">
             <field name="name">Customer Debit Notes</field>
-            <field name="res_model">account.invoice</field>
-            <field name="view_type">form</field>
+            <field name="res_model">account.move</field>
             <field name="view_mode">tree,form,calendar,graph</field>
             <field eval="False" name="view_id"/>
             <field name="domain">[
@@ -270,19 +268,18 @@
             <field name="act_window_id" ref="account_invoice_action_debit_note"/>
         </record>
 
-        <record id="account.action_invoice_tree2" model="ir.actions.act_window">
+        <!-- <record id="account.action_invoice_tree2" model="ir.actions.act_window">
             <field name="name">Bills</field>
-            <field name="res_model">account.invoice</field>
+            <field name="res_model">account.move</field>
             <field name="domain">[
                 ('type','=','in_invoice'),
                 ('is_debit_note', '=', False)
             ]</field>
-        </record>
+        </record> -->
 
         <record id="account_invoice_action_debit_note_supp" model="ir.actions.act_window">
             <field name="name">Supplier Debit Notes</field>
-            <field name="res_model">account.invoice</field>
-            <field name="view_type">form</field>
+            <field name="res_model">account.move</field>
             <field name="view_mode">tree,form,calendar,graph</field>
             <field eval="False" name="view_id"/>
             <field name="domain">[
@@ -312,13 +309,13 @@
             <field name="view_id" ref="account_invoice_view_form_supplier"/>
         </record>
 
-        <record id="account.action_invoice_out_refund" model="ir.actions.act_window">
+        <!-- <record id="account.action_invoice_out_refund" model="ir.actions.act_window">
             <field name="name">Customer Credit Notes</field>
-        </record>
+        </record> -->
 
-        <record id="account.action_invoice_in_refund" model="ir.actions.act_window">
+        <!-- <record id="account.action_invoice_in_refund" model="ir.actions.act_window">
             <field name="name">Vendor Credit Notes</field>
-        </record>
+        </record> -->
 
     </data>
 </odoo>

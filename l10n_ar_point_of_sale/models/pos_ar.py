@@ -45,7 +45,6 @@ class PosAr(models.Model):
     )
     image = fields.Binary("Image", attachment=True)
 
-    @api.multi
     def name_get(self):
         res = []
         for pos in self:
@@ -94,21 +93,18 @@ class PosAr(models.Model):
             if regs:
                 raise ValidationError(_("Error! The PoS is duplicated"))
 
-    @api.multi
     def unlink(self):
         affected_models = [
-            'account.invoice',
+            'account.move',
         ]
         affected_models = self._hook_affected_models(affected_models)
         self._check_affected_models(affected_models)
 
         return super().unlink()
 
-    @api.multi
     def _hook_affected_models(self, affected_models):
         return affected_models
 
-    @api.multi
     def _check_affected_models(self, affected_models):
         for record in self:
             search_dict = {}

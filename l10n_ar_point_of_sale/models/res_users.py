@@ -20,7 +20,6 @@ class ResUsers(models.Model):
         company_dependent=True,
     )
 
-    @api.multi
     def get_default_pos_id(self, record):
         """By default return the default_pos for the user's commercial field
         Otherwise, returns the current user default.

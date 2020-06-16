@@ -14,9 +14,9 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountInvoice(models.Model):
-    _name = "account.invoice"
-    _inherit = "account.invoice"
-    _order = "date_invoice desc, internal_number desc"
+    _name = "account.move"
+    _inherit = "account.move"
+    _order = "invoice_date desc, internal_number desc"
 
     pos_ar_id = fields.Many2one(
         comodel_name='pos.ar',
@@ -78,7 +78,6 @@ class AccountInvoice(models.Model):
     )
 
     # DONE
-    @api.multi
     def name_get(self):
         TYPES = {
             'out_invoice': _('CI'),
@@ -167,11 +166,11 @@ class AccountInvoice(models.Model):
     # Compute fields for invoice's page footer
     @api.depends(
         'invoice_line_ids.price_subtotal',
-        'tax_line_ids.amount',
-        'tax_line_ids.amount_rounding',
+        # 'tax_line_ids.amount',
+        # 'tax_line_ids.amount_rounding',
         'currency_id',
         'company_id',
-        'date_invoice',
+        'invoice_date',
         'type',
     )
     def _compute_amount(self):
@@ -236,7 +235,6 @@ class AccountInvoice(models.Model):
             )
 
     # TODO: how do we cancel a paid Credit Note?
-    @api.multi
     def action_cancel(self):
         states = (
             'draft',
@@ -309,7 +307,6 @@ class AccountInvoice(models.Model):
                         _('Error! The Invoice is duplicated.'))
 
     # DONE
-    @api.multi
     def _check_fiscal_values(self):
         for invoice in self:
             # Si es factura de cliente
@@ -356,7 +353,6 @@ class AccountInvoice(models.Model):
                       'the same as the partner\'s fiscal position.'))
 
     # DONE
-    @api.multi
     def get_next_invoice_number(self):
         """
         Funcion para obtener el siguiente
@@ -398,7 +394,6 @@ class AccountInvoice(models.Model):
         return int(next_number + offset)
 
     # DONE
-    @api.multi
     def action_move_create(self):
         if self.local:
             self._check_fiscal_values()
@@ -407,7 +402,6 @@ class AccountInvoice(models.Model):
         return res
 
     # DONE
-    @api.multi
     def action_number(self):
         for inv in self:
             invoice_vals = {}
@@ -459,14 +453,13 @@ class AccountInvoice(models.Model):
             inv.write(invoice_vals)
         return True
 
-    @api.multi
     @api.returns('self')
-    def refund(self, date_invoice=None, date=None,
+    def refund(self, invoice_date=None, date=None,
                description=None, journal_id=None):
 
         # Devuelve los ids de las invoice modificadas
         inv_ids = super(AccountInvoice, self).\
-            refund(date_invoice, date, description, journal_id)
+            refund(invoice_date, date, description, journal_id)
 
         # Busco los puntos de venta de las invoices anteriores
         for inv in inv_ids:
@@ -529,8 +522,8 @@ class AccountInvoice(models.Model):
 
 
 class AccountInvoiceTax(models.Model):
-    _name = "account.invoice.tax"
-    _inherit = "account.invoice.tax"
+    _name = "account.move.line"
+    _inherit = "account.move.line"
 
     tax_id = fields.Many2one(
         'account.tax', string='Account Tax', required=True)

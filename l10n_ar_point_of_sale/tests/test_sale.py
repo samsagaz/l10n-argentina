@@ -57,7 +57,7 @@ class TestSale:
         self.create_demo(ENV)
         partner = ENV.ref('base.res_partner_12')
         sale_obj = ENV['sale.order']
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         pos_ar_obj = ENV['pos.ar']
         product = ENV.ref(
                 'sale.advance_product_0')

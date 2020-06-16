@@ -35,7 +35,6 @@ class AccountTax(models.Model):
     )
 
 
-@api.multi
 def post(self, invoice=False):
     invoice = self._context.get('invoice', False)
     self._post_validate()
@@ -74,7 +73,6 @@ class AccountMove(models.Model):
 
     _inherit = "account.move"
 
-    @api.model_cr
     def _register_hook(self):
         res = super()._register_hook()
         # Heredamos para que no ponga el nombre del internal_number

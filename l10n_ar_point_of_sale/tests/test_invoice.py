@@ -8,7 +8,7 @@ class TestInvoice:
 
     def initialize_demo(self, ENV):
         account_obj = ENV['account.account']
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         journal_obj = ENV['account.journal']
         pos_ar_obj = ENV['pos.ar']
         denomination = ENV.ref(
@@ -59,7 +59,7 @@ class TestInvoice:
 
     def get_invoice_vals(self, ENV):
         account_obj = ENV['account.account']
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         product = ENV.ref(
                 'sale.advance_product_0')
         partner = ENV.ref('base.res_partner_12')
@@ -92,7 +92,7 @@ class TestInvoice:
 
     def test_duplicated_out_invoice(self, ENV):
         self.initialize_demo(ENV)
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         pos_ar_obj = ENV['pos.ar']
         invoice_vals = self.get_invoice_vals(ENV)
         invoice = invoice_obj.create(invoice_vals.copy())
@@ -154,7 +154,7 @@ class TestInvoice:
 
     def test_duplicated_in_invoice(self, ENV):
         self.initialize_demo(ENV)
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         pos_ar_obj = ENV['pos.ar']
         partner = ENV.ref('base.res_partner_12')
         invoice_vals = self.get_invoice_vals(ENV)
@@ -223,7 +223,7 @@ class TestInvoice:
 
     def test_fiscal_values(self, ENV):
         self.initialize_demo(ENV)
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         pos_ar_obj = ENV['pos.ar']
         invoice_vals = self.get_invoice_vals(ENV)
         invoice = invoice_obj.create(invoice_vals.copy())
@@ -258,7 +258,7 @@ class TestInvoice:
 
     def test_fiscal_values_supp(self, ENV):
         self.initialize_demo(ENV)
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         pos_ar_obj = ENV['pos.ar']
         invoice_vals = self.get_invoice_vals(ENV)
         invoice_vals.update({
@@ -289,7 +289,7 @@ class TestInvoice:
 
     def test_cancel_state(self, ENV):
         self.initialize_demo(ENV)
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         pos_ar_obj = ENV['pos.ar']
         journal_obj = ENV['account.journal']
         payment_obj = ENV['account.payment']
@@ -304,7 +304,7 @@ class TestInvoice:
 
     def test_invoice_cancel(self, ENV):
         self.initialize_demo(ENV)
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         pos_ar_obj = ENV['pos.ar']
         journal_obj = ENV['account.journal']
         payment_obj = ENV['account.payment']
@@ -322,7 +322,7 @@ class TestInvoice:
         })
         payment_method_manual_out = ENV.ref("account.account_payment_method_manual_out")
         wz = payment_obj.create({
-            'payment_date': time.strftime('%Y') + '-07-15',
+            # 'payment_date': time.strftime('%Y') + '-07-15',
             'payment_type': 'transfer',
             'amount': 1,
             'currency_id': ENV.user.company_id.currency_id.id,
@@ -344,7 +344,7 @@ class TestInvoice:
 
     def test_check_number(self, ENV):
         self.initialize_demo(ENV)
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         invoice_vals = self.get_invoice_vals(ENV)
         # invoice_vals.update({
         #     'internal_number': '',

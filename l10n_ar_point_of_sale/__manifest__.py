@@ -13,8 +13,7 @@
     "depends": [
         "sale_stock",
         "purchase",
-        "account_voucher",
-        "base_vat_ar",
+        "account",
     ],
     "data": [
         "views/invoice_denomination_view.xml",

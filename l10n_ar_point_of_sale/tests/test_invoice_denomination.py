@@ -23,7 +23,7 @@ class TestInvoiceDenomination:
     def test_unlink_denominaiton(self, ENV):
         partner = ENV.ref('base.res_partner_12')
         account_obj = ENV['account.account']
-        invoice_obj = ENV['account.invoice']
+        invoice_obj = ENV['account.move']
         journal_obj = ENV['account.journal']
         receivable_type = ENV.ref(
                 'account.data_account_type_receivable')

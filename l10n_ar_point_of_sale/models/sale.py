@@ -15,7 +15,6 @@ class SaleOrder(models.Model):
 
     _inherit = "sale.order"
 
-    @api.multi
     def _get_pos_ar(self, denom):
         pos_ar_obj = self.env['pos.ar']
         res_pos = self.env.user.get_default_pos_id(self)
