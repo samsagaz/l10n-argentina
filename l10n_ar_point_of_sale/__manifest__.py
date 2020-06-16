@@ -6,7 +6,7 @@
 {
     "name": "Point of Sale",
     "category": "L10N AR",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "author": "Eynes/E-MIPS",
     "license": "AGPL-3",
     "description": "Basic Normatives for Argentina's invoicing system",
