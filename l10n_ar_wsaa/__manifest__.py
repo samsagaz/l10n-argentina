@@ -20,7 +20,7 @@
 {
     "name": "WSAA (Web Service Afip Authentication)",
     "category": "L10N AR",
-    "version": "11.0.1.0.0",
+    "version": "13.0.1.0.0",
     "author": "Eynes/E-MIPS",
     "license": "AGPL-3",
     "description": "Authentication for AFIP Web Services",

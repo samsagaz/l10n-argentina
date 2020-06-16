@@ -66,7 +66,6 @@ class WSAACertificateRequest(models.Model):
                 continue
             rec.state = 'new'
 
-    @api.multi
     def write(self, vals):
         if 'subj_cuit' in vals:
             normalized_cuit = self._normalize_subj_cuit(vals.get('subj_cuit'))
@@ -86,7 +85,6 @@ class WSAACertificateRequest(models.Model):
         cuit_number = re.sub(pattern, '', cuit)
         return 'CUIT ' + cuit_number
 
-    @api.multi
     def generate_certificate_request(self):
         self.ensure_one()
         PrivKey = crypto.load_privatekey(crypto.FILETYPE_PEM, self.key)
@@ -112,7 +110,6 @@ class WSAACertificateRequest(models.Model):
         CReq_bytes = crypto.dump_certificate_request(crypto.FILETYPE_PEM, CReq)
         self.cert_request = CReq_bytes.decode()
 
-    @api.multi
     def generate_key(self):
         PKey = crypto.PKey()
         PKey.generate_key(crypto.TYPE_RSA, 2048)
@@ -124,7 +121,6 @@ class WSAACertificateRequest(models.Model):
         )
         self.key = serialized_key
 
-    @api.multi
     def gather_from_cert(self):
         field = self.env.context.get('field', 'certificate')
         cert_string = getattr(self, field)
@@ -139,7 +135,6 @@ class WSAACertificateRequest(models.Model):
         }
         return self.write(vals)
 
-    @api.multi
     def download_file(self):
         self.ensure_one()
         field = self.env.context.get('field')

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
 
@@ -15,6 +14,8 @@
             <field name="arch" type="xml">
                 <tree string="WSAA Config">
                     <field name="company_id" select="1"/>
+                    <field name="name" select="1" />
+                    <field name="environment" select="1" />
                     <field name="url" select="1" />
                 </tree>
             </field>
@@ -34,6 +35,7 @@
                         <group>
                             <field name="name" select="1" />
                             <field name="company_id" select="1"/>
+                            <field name="environment" select="1" />
                             <field name="url" select="1" />
                         </group>
                         <notebook colspan="4">
@@ -50,52 +52,58 @@
                                     </tree>
                                 </field>
                             </page>
+
                             <page string="Security Info" groups="account.group_account_manager">
-                                <separator string="Certificate" colspan="4" class="oe_inline"/>
-                                <div class="oe_right oe_button_box oe_inline">
+                                <separator string="Certificate"/>
+                                <div class="oe_right oe_button_box">
                                     <button type="object"
+                                        width="200"                                    
                                         context="{
                                         'field': 'certificate',
                                         'filename': 'cert.crt',
                                         }"
-                                        class="oe_stat_button"
                                         icon="fa-download"
                                         attrs="{'invisible': [('certificate', '=', False)]}"
                                         name="download_file">
                                         <div><strong>Download</strong></div>
                                     </button>
                                     <button type="action"
-                                        class="oe_stat_button"
+                                        width="150"                                    
                                         id="wsaa_certificate_renewal"
                                         icon="fa-certificate"
                                         name="%(certificate_renewal_wizard_action)d">
                                         <div><strong>Load Certificate</strong></div>
                                     </button>
+
                                 </div>
                                 <br/>
+                                
                                 <field name="certificate" colspan="4" nolabel="1" height="200"/>
+
                                 <separator string="Key" colspan="4" class="oe_inline"/>
                                 <div class="oe_right oe_button_box oe_inline">
                                     <button type="object"
+                                        width="150"
                                         context="{
                                         'field': 'key',
                                         'filename': 'priv.key',
                                         }"
-                                        class="oe_stat_button"
                                         icon="fa-download"
                                         attrs="{'invisible': [('key', '=', False)]}"
                                         name="download_file">
                                         <div><strong>Download</strong></div>
                                     </button>
                                     <button type="action"
-                                        class="oe_stat_button"
+                                        width="150"                                    
                                         id="wsaa_certificate_renewal"
                                         icon="fa-key"
                                         name="%(key_renewal_wizard_action)d">
                                         <div><strong>Load Key</strong></div>
                                     </button>
                                 </div>
+
                                 <field name="key" colspan="4" nolabel="1" height="200"/>
+
                             </page>
                         </notebook>
                     </sheet>
@@ -108,7 +116,6 @@
             <field name="name">WSAA Config</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">wsaa.config</field>
-            <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 

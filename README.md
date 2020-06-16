@@ -12,6 +12,8 @@ Available addons
 addon | version | summary            
 --- | --- | ---
 [l10n_ar_point_of_sale](l10n_ar_point_of_sale/) | 13.0.1.0.0 | Point of Sale ARGENTINA
+[l10n_ar_wsaa](l10n_ar_wsaa/) | 13.0.1.0.0 | WSAA
+
 
 [base_period](base_period/) | 11.0.1.0.0 | base_period
 [l10n_ar_account_check](l10n_ar_account_check/) | 11.0.1.0.0 | Account Checks
@@ -21,7 +23,6 @@ addon | version | summary
 [l10n_ar_perceptions_basic](l10n_ar_perceptions_basic/) | 11.0.1.0.0 | Perceptions for ARGENTINA (Percepciones) - Basic Module
 [l10n_ar_point_of_sale](l10n_ar_point_of_sale/) | 11.0.1.0.0 | Point of Sale ARGENTINA
 [l10n_ar_retentions_basic](l10n_ar_retentions_basic/) | 11.0.1.0.0 | Retentions for ARGENTINA (Retenciones)
-[l10n_ar_wsaa](l10n_ar_wsaa/) | 11.0.1.0.0 | WSAA
 [l10n_ar_wsfe](l10n_ar_wsfe/) | 11.0.1.0.0 | WSFE (Factura Electronica)
 
 [//]: # (end addons)

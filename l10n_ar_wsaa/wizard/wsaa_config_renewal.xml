@@ -51,7 +51,6 @@
             <field name="name">Certificate Renewal</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">wsaa.load.config</field>
-            <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="certificate_renewal_wizard"/>
             <field name="target">new</field>
@@ -61,7 +60,6 @@
             <field name="name">Key Renewal</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">wsaa.load.config</field>
-            <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="key_renewal_wizard"/>
             <field name="target">new</field>

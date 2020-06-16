@@ -13,8 +13,7 @@ from odoo.exceptions import ValidationError
 class wsaa_load_config(models.TransientModel):
     _name = 'wsaa.load.config'
     _description = 'Load configuration for WSAA'
-
-    @api.multi
+    
     def read_file(self, filename=False, filedata=False,
                   ext=False, context={}):
         if not filename or not filedata or not ext:
@@ -32,7 +31,6 @@ class wsaa_load_config(models.TransientModel):
         fileobj.close()
         return lines
 
-    @api.multi
     def load_cert(self):
         form_id = self.env.context.get('active_ids', False)
         if not form_id or len(form_id) != 1:
@@ -50,7 +48,6 @@ class wsaa_load_config(models.TransientModel):
         }
         obj.write(write_vals)
 
-    @api.multi
     def load_key(self):
         form_id = self.env.context.get('active_ids', False)
         if not form_id or len(form_id) != 1:

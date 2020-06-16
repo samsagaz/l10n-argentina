@@ -17,7 +17,15 @@ class wsaa_config(models.Model):
     name = fields.Char('Description', size=255)
     certificate = fields.Text('Certificate', readonly=True)
     key = fields.Text('Private Key', readonly=True)
-    url = fields.Char('URL for WSAA', size=60, required=True)
+    url = fields.Char('URL for WSAA', size=60, required=True,
+                      default=lambda self: self._get_ws_url())
+
+    environment = fields.Selection([
+        ('https://wsaahomo.afip.gov.ar/ws/services/LoginCms', 'Testing'),
+        ('https://wsaa.afip.gov.ar/ws/services/LoginCms', 'Production')],
+        string='Environment', required=True, copy=False,
+        default='https://wsaahomo.afip.gov.ar/ws/services/LoginCms')
+
     company_id = fields.Many2one(
         'res.company', 'Company Name', required=True,
         default=lambda self: self.env.user.company_id.id)
@@ -30,7 +38,10 @@ class wsaa_config(models.Model):
          'The configuration must be unique per company !')
     ]
 
-    @api.multi
+    @api.onchange('environment')
+    def _get_ws_url(self):
+        self.url = self.environment
+
     def download_file(self):
         self.ensure_one()
         field = self.env.context.get('field')
@@ -103,7 +114,6 @@ class wsaa_ta(models.Model):
         }
         return vals
 
-    @api.multi
     def get_token_sign(self):
         ticket = self
         force = self._context.get('force_renew', False)
@@ -132,7 +142,6 @@ class wsaa_ta(models.Model):
             new_cr.close()
         return vals['token'], vals['sign']
 
-    @api.multi
     def action_renew(self):
         self.with_context(force_renew=True).get_token_sign()
         return True
